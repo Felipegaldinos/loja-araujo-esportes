@@ -1,0 +1,224 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #f3f3f3;
+    color: #333;
+  }
+ /* HEADER: logo à esquerda, pesquisa centralizada */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background:  #f5f5e0;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+  .logo {
+    position: absolute;
+    left: 20px;
+  }
+
+  .logo img {
+    height: 70px;
+  }
+
+ /* Barra de busca centralizada */
+.search-bar {
+  position: relative;
+  width: 60%;
+  max-width: 600px;
+  transition: width 0.3s;
+}
+.search-bar input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+}
+.search-bar .search-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: #888;
+  cursor: pointer;
+}
+
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .product-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    text-align: center;
+    width: 220px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .product-card.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .product-card h3 {
+    font-size: 18px;
+    margin: 10px 0 5px;
+  }
+
+  .product-card p {
+    font-weight: bold;
+    margin: 5px 0 15px;
+  }
+
+  .whatsapp-button {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+
+  .whatsapp-button:hover {
+    background-color: #1ebf56;
+  }
+
+  .highlight {
+    background-color: yellow;
+  }
+
+  /* MODAL */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    text-align: center;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .modal-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+  .modal-carousel img {
+    height: 150px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  /* RESPONSIVO */
+  /* Responsividade */
+@media (max-width: 768px) {
+  .search-bar {
+    width: 80%;
+  }
+}
+@media (max-width: 480px) {
+  .search-bar {
+    width: 60%;
+  }
+  .search-bar input {
+    font-size: 14px;
+  }
+  .search-bar .search-icon {
+    font-size: 18px;
+  }
+}
+  .carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    margin: 15px 0;
+  }
+  
+  .carousel {
+    display: flex;
+    transition: transform 0.4s ease;
+    width: 100%;
+  }
+  
+  .carousel img {
+    min-width: 100%;
+    max-height: 220px;
+    border-radius: 10px;
+    object-fit: cover;
+    user-select: none;
+  }
+  
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 10;
+    border-radius: 50%;
+  }
+  
+  .carousel-btn.left { left: 10px; }
+  .carousel-btn.right { right: 10px; }
+  

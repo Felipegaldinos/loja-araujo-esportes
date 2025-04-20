@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="produto.css">
+  <link rel="shortcut icon" href="/img/logoaresp.png" type="image/x-icon">
+  <title>Produtos</title>
+
+</head>
+<body>
+<header>
+  <div class="logo">
+    <img src="/img/logoaresp.png" alt="Araújo Esportes Logo">
+  </div>
+
+  <div class="search-bar">
+    <input type="text" id="search" placeholder="Busque um produto..." onkeyup="filterProducts()">
+    <span class="search-icon">&#128269;</span>
+  </div>
+</header>
+  <div class="container" id="product-list"></div>
+
+<!-- MODAL COM CARROSSEL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="fecharModal()">&times;</span>
+
+    <div class="carousel-wrapper">
+      <button class="carousel-btn left" onclick="moverSlide(-1)">&#10094;</button>
+      <div class="carousel" id="carousel"></div>
+      <button class="carousel-btn right" onclick="moverSlide(1)">&#10095;</button>
+    </div>
+
+    <h2 id="modal-nome"></h2>
+    <p id="modal-descricao"></p>
+    <p id="modal-preco"></p>
+    <a id="modal-whatsapp" class="whatsapp-button" target="_blank">Comprar via WhatsApp</a>
+  </div>
+</div>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <script>
+    const products = [
+      {
+        nome: "Tênis Esportivo",
+        preco: "R$ 199,90",
+        descricao: "Tênis ideal para corrida e treinos de academia. Confortável e leve.",
+        imagens: [
+          "/img/tenis-esportivo.jpg",
+          "/img/tenis-esportivo.jpg",
+          "/img/tenis-esportivo.jpg",
+          "/img/tenis-esportivo.jpg",
+          "/img/tenis-esportivo.jpg"
+        ]
+      },
+      {
+        nome: "Camisa Dry Fit",
+        preco: "R$ 69,90",
+        descricao: "Camisa leve, respirável e perfeita para treinos intensos.",
+        imagens: [
+          "/img/camsia-dryfit.jpeg",
+          "/img/camsia-dryfit.jpeg",
+          "/img/camsia-dryfit.jpeg",
+          "/img/camsia-dryfit.jpeg",
+          "/img/camsia-dryfit.jpeg"
+        ]
+      },
+      {
+        nome: "Kit Treino",
+        preco: "R$ 149,90",
+        descricao: "Kit completo para treinamento funcional e agilidade.",
+        imagens: [
+          "/img/kit.webp",
+          "/img/kit.webp",
+          "/img/kit.webp",
+          "/img/kit.webp",
+          "/img/kit.webp"
+        ]
+      },
+      {
+        nome: "Faixa de Pulso",
+        preco: "R$ 39,90",
+        descricao: "Faixas elásticas de alta compressão para suporte e conforto.",
+        imagens: [
+          "/img/faixadepilso.webp",
+          "/img/faixadepilso.webp",
+          "/img/faixadepilso.webp",
+          "/img/faixadepilso.webp",
+          "/img/faixadepilso.webp"
+        ]
+      },
+      {
+        nome: "Chuteira futsal",
+        preco: "R$ 199,90",
+        descricao: "Confortável e leve.",
+        imagens: [
+          "/img/tenisfutsal.jpeg",
+          "/img/tenisfutsal.jpeg",
+          "/img/tenisfutsal.jpeg",
+          "/img/tenisfutsal.jpeg",
+          "/img/tenisfutsal.jpeg"
+        ]
+      },
+      {
+        nome: "chuteira",
+        preco: "R$ 189,90",
+        descricao: "Confortável e leve.",
+        imagens: [
+          "/img/chuteira.webp",
+          "/img/chuteira.webp",
+          "/img/chuteira.webp",
+          "/img/chuteira.webp",
+          "/img/chuteira.webp"
+        ]
+      },
+      {
+        nome: "bola campo",
+        preco: "R$ 149,90",
+        descricao: "Kit completo para treinamento funcional e agilidade.",
+        imagens: [
+          "/img/bola.webp",
+          "/img/bola.webp",
+          "/img/bola.webp",
+          "/img/bola.webp",
+          "/img/bola.webp"
+        ]
+      },
+      {
+        nome: "calção termico",
+        preco: "R$ 59,90",
+        descricao: "Alta compressão para suporte e conforto.",
+        imagens: [
+          "/img/calçãotermico.jpg",
+          "/img/calçãotermico.jpg",
+          "/img/calçãotermico.jpg",
+          "/img/calçãotermico.jpg",
+          "/img/calçãotermico.jpg"
+        ]
+      },
+      {
+        nome: "Meia antederrapante",
+        preco: "R$ 19,90",
+        descricao: "Meia ideal para corrida e treinos de academia.",
+        imagens: [
+          "/img/meia.webp",
+          "/img/meia.webp",
+          "/img/meia.webp",
+          "/img/meia.webp",
+          "/img/meia.webp"
+        ]
+      },
+      {
+        nome: "bola futsal",
+        preco: "R$ 139,90",
+        descricao: "Bola de otima qualidade.",
+        imagens: [
+          "/img/bola.webp",
+          "/img/bola.webp",
+          "/img/bola.webp",
+          "/img/bola.webp",
+          "/img/bola.webp"
+        ]
+      },
+      {
+        nome: "camisa ibis",
+        preco: "R$ 99,90",
+        descricao: "Camisa Ibis, com a melhor qualidade.",
+        imagens: [
+          "/img/ibis.jpeg",
+          "/img/ibis.jpeg",
+          "/img/ibis.jpeg",
+          "/img/ibis.jpeg",
+          "/img/ibis.jpeg"
+        ]
+      },
+      {
+        nome: "camisa cuiaba",
+        preco: "R$ 99,90",
+        descricao: "Camisa cuiaba, com a melhor qualidade.",
+        imagens: [
+          "/img/cuiaba.jpeg",
+          "/img/cuiaba.jpeg",
+          "/img/cuiaba.jpeg",
+          "/img/cuiaba.jpeg",
+          "/img/cuiaba.jpeg"
+        ]
+      },
+      {
+        nome: "camisa Alemanha",
+        preco: "R$ 99,90",
+        descricao: "Camisa Alemanha, alto conforto.",
+        imagens: [
+          "/img/camisadetime.webp",
+          "/img/camisadetime.webp",
+          "/img/camisadetime.webp",
+          "/img/camisadetime.webp",
+          "/img/camisadetime.webp"
+        ]
+      },{
+        nome: "Nessecer Umbro",
+        preco: "R$ 49,90",
+        descricao: "Ideal para jogos.",
+        imagens: [
+          "/img/nessecer.jpeg",
+          "/img/nessecer.jpeg",
+          "/img/nessecer.jpeg",
+          "/img/nessecer.jpeg",
+          "/img/nessecer.jpeg"
+        ]
+      },{
+        nome: "Elástico Latex",
+        preco: "R$ 29,90",
+        descricao: "Cofortável, leve e perfeito para melhorar seu desempenho em campo.",
+        imagens: [
+          "/img/liga.jpg",
+          "/img/liga.jpg",
+          "/img/liga.jpg",
+          "/img/liga.jpg",
+          "/img/liga.jpg"
+        ]
+      }
+    ];
+
+    function loadProducts() {
+      const container = document.getElementById("product-list");
+      container.innerHTML = "";
+      products.forEach((product, index) => {
+        const div = document.createElement("div");
+        div.className = "product-card";
+        setTimeout(() => div.classList.add("show"), index * 100);
+        div.innerHTML = `
+          <img src="${product.imagens[0]}" alt="${product.nome}">
+          <h3>${product.nome}</h3>
+          <p>${product.preco}</p>
+        `;
+        div.onclick = () => abrirModal(product);
+        container.appendChild(div);
+      });
+    }
+
+    let slideIndex = 0;
+let imagensAtuais = [];
+
+function abrirModal(produto) {
+  document.getElementById("modal-nome").textContent = produto.nome;
+  document.getElementById("modal-preco").textContent = produto.preco;
+  document.getElementById("modal-descricao").textContent = produto.descricao;
+  document.getElementById("modal-whatsapp").href = `https://wa.me/5511999999999?text=Olá! Tenho interesse no produto *${produto.nome}* que custa ${produto.preco}.`;
+
+  const carousel = document.getElementById("carousel");
+  carousel.innerHTML = "";
+
+  imagensAtuais = produto.imagens;
+  slideIndex = 0;
+
+  produto.imagens.forEach(img => {
+    const image = document.createElement("img");
+    image.src = img;
+    image.alt = produto.nome;
+    carousel.appendChild(image);
+  });
+
+  atualizarSlide();
+  document.getElementById("modal").style.display = "flex";
+}
+function moverSlide(direcao) {
+  slideIndex += direcao;
+  const total = imagensAtuais.length;
+  if (slideIndex < 0) slideIndex = total - 1;
+  if (slideIndex >= total) slideIndex = 0;
+  atualizarSlide();
+}
+
+function atualizarSlide() {
+  const carousel = document.getElementById("carousel");
+  carousel.style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+
+
+    function fecharModal() {
+      document.getElementById("modal").style.display = "none";
+    }
+
+    function filterProducts() {
+      const searchInput = document.getElementById("search").value.toLowerCase();
+      document.querySelectorAll(".product-card").forEach(card => {
+        const title = card.querySelector("h3");
+        title.innerHTML = title.innerText.replace(/<span class="highlight">|<\/span>/g, "");
+        if (title.innerText.toLowerCase().includes(searchInput)) {
+          card.style.display = "block";
+          title.innerHTML = title.innerText.replace(new RegExp(searchInput, "gi"), match => `<span class="highlight">${match}</span>`);
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    window.onload = loadProducts;
+
+    function moverSlide(direcao) {
+  slideIndex += direcao;
+  const total = imagensAtuais.length;
+  if (slideIndex < 0) slideIndex = total - 1;
+  if (slideIndex >= total) slideIndex = 0;
+  atualizarSlide();
+}
+
+function atualizarSlide() {
+  const carousel = document.getElementById("carousel");
+  carousel.style.transform = `translateX(-${slideIndex * 100}%)`;
+}
+let startX = 0;
+let isDragging = false;
+
+document.addEventListener("mousedown", e => {
+  if (!e.target.closest("#carousel")) return;
+  startX = e.clientX;
+  isDragging = true;
+});
+
+document.addEventListener("mouseup", e => {
+  if (!isDragging) return;
+  const endX = e.clientX;
+  if (endX < startX - 50) moverSlide(1);
+  if (endX > startX + 50) moverSlide(-1);
+  isDragging = false;
+});
+
+document.addEventListener("touchstart", e => {
+  if (!e.target.closest("#carousel")) return;
+  startX = e.touches[0].clientX;
+});
+
+document.addEventListener("touchend", e => {
+  const endX = e.changedTouches[0].clientX;
+  if (endX < startX - 50) moverSlide(1);
+  if (endX > startX + 50) moverSlide(-1);
+});
+
+  </script>
+
+</body>
+</html>
