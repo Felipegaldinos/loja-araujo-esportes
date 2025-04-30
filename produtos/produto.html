@@ -41,6 +41,7 @@
 
     <h2 id="modal-nome"></h2>
     <p id="modal-descricao"></p>
+    <p id="modal-tamanho"></p>
     <p id="modal-preco"></p>
     <a id="modal-whatsapp" class="whatsapp-button" target="_blank">Comprar via WhatsApp</a>
   </div>
@@ -51,75 +52,78 @@
   <script>
     const products = [
       {
-        nome: "Tênis Esportivo",
-        preco: "R$ 199,90",
-        descricao: "Tênis ideal para corrida e treinos de academia. Confortável e leve.",
+        nome: "Chuteira Futsal Nike Lunar Gato II",
+        preco: "R$ 449,90",
+        descricao: "O Nike Lunar Gato é um tênis de futsal com cabedal em couro e mesh, que oferece toque preciso e ventilação. Possui entressola Lunarlon para amortecimento leve e solado de borracha non-marking com ótima tração em quadras indoor.",
+        tamanhos:["38 ao 43"],
         imagens: [
-          "/img/tenis-esportivo.jpg",
-          "/img/tenis-esportivo.jpg",
-          "/img/tenis-esportivo.jpg",
-          "/img/tenis-esportivo.jpg",
-          "/img/tenis-esportivo.jpg"
+          "/img/lunargato01.jpg",
+          "/img/lunargato02.jpg",
+          "/img/lunargato03.jpg",
+          "/img/lunargato04.jpg",
+          "/img/lunargato05.jpg",
+          "/img/lunargato06.jpg",
+          "/img/lunargato07.jpg"
         ]
       },
       {
-        nome: "Camisa Dry Fit",
-        preco: "R$ 69,90",
-        descricao: "Camisa leve, respirável e perfeita para treinos intensos.",
+        nome: "Chuteira Campo PUMA Future",
+        preco: "R$ 489,90",
+        descricao: " Conta com cabedal em material têxtil com tecnologia FUZIONFIT, que se adapta ao formato do pé para máxima estabilidade e conforto. As texturas grip na parte frontal melhoram o controle de bola, enquanto o solado com travas multidirecionais garante tração explosiva em gramados naturais ou artificiais, dependendo da versão.",
+        tamanhos:["38 ao 43"],
         imagens: [
-          "/img/camsia-dryfit.jpeg",
-          "/img/camsia-dryfit.jpeg",
-          "/img/camsia-dryfit.jpeg",
-          "/img/camsia-dryfit.jpeg",
-          "/img/camsia-dryfit.jpeg"
+          "/img/pumafuture01.jpg",
+          "/img/pumafuture02.jpg",
+          "/img/pumafuture03.jpg",
+          "/img/pumafuture04.jpg",
+          "/img/pumafuture05.jpg"
         ]
       },
       {
-        nome: "Kit Treino",
-        preco: "R$ 149,90",
-        descricao: "Kit completo para treinamento funcional e agilidade.",
+        nome: "Chuteira Campo Mizuno Morelia Neo III Beta",
+        preco: "R$ 489,90",
+        descricao: "Seu cabedal combina couro de canguru de alta qualidade na parte frontal com material sintético leve e elástico no colar, proporcionando excelente sensibilidade ao toque e firmeza no pé. O solado de dupla densidade, fabricado no Japão, oferece tração responsiva e estabilidade em gramados naturais.",
+        tamanhos:["38 ao 43"],
         imagens: [
-          "/img/kit.webp",
-          "/img/kit.webp",
-          "/img/kit.webp",
-          "/img/kit.webp",
-          "/img/kit.webp"
+          "/img/moreliaz01.jpg",
+          "/img/moreliaz02.jpg",
+          "/img/moreliaz03.jpg",
+          "/img/moreliaz04.jpg",
+          
         ]
       },
       {
-        nome: "Faixa de Pulso",
-        preco: "R$ 39,90",
-        descricao: "Faixas elásticas de alta compressão para suporte e conforto.",
+        nome: "Chuteira Campo Mizuno Morelia Neo III ",
+        preco: "R$ 489,90",
+        descricao: ". Seu cabedal combina couro de canguru de alta qualidade com materiais sintéticos, proporcionando ajuste preciso e durabilidade. A entressola em EVA e o solado em TPU com travas fixas garantem amortecimento e tração eficaz em gramados naturais. ",
+        tamanhos:["38 ao 43"],
         imagens: [
-          "/img/faixadepilso.webp",
-          "/img/faixadepilso.webp",
-          "/img/faixadepilso.webp",
-          "/img/faixadepilso.webp",
-          "/img/faixadepilso.webp"
+          "/img/beta01.jpg",
+          "/img/beta002.jpg",
+          
         ]
       },
       {
-        nome: "Chuteira futsal",
+        nome: "Canelito Pênalty",
         preco: "R$ 199,90",
         descricao: "Confortável e leve.",
+        tamanhos:["Todos"],
         imagens: [
-          "/img/tenisfutsal.jpeg",
-          "/img/tenisfutsal.jpeg",
-          "/img/tenisfutsal.jpeg",
-          "/img/tenisfutsal.jpeg",
-          "/img/tenisfutsal.jpeg"
+          "/img/canelito01.jpg",
+          "/img/canelito02.jpg",
+          "/img/canelito03.jpg",
+          "/img/canelito04.jpg",
+          
         ]
       },
       {
-        nome: "chuteira",
+        nome: "Canelito Delfia",
         preco: "R$ 189,90",
         descricao: "Confortável e leve.",
+        tamanhos:["Todos"],
         imagens: [
-          "/img/chuteira.webp",
-          "/img/chuteira.webp",
-          "/img/chuteira.webp",
-          "/img/chuteira.webp",
-          "/img/chuteira.webp"
+          "/img/delfia01.jpg",
+          "/img/delfia02.jpg",
         ]
       },
       {
@@ -254,11 +258,18 @@ function abrirModal(produto) {
   document.getElementById("modal-nome").textContent = produto.nome;
   document.getElementById("modal-preco").textContent = produto.preco;
   document.getElementById("modal-descricao").textContent = produto.descricao;
-  document.getElementById("modal-whatsapp").href = `https://wa.me/5511999999999?text=Olá! Tenho interesse no produto *${produto.nome}* que custa ${produto.preco}.`;
+
+  // Adiciona tamanhos, se existirem
+  const tamanhos = produto.tamanhos && produto.tamanhos.length > 0
+    ? produto.tamanhos.join(", ")
+    : "Tamanhos indisponíveis";
+  document.getElementById("modal-tamanho").innerHTML = `<strong>Tamanhos disponíveis:</strong> ${tamanhos}`;
+
+  document.getElementById("modal-whatsapp").href =
+    `https://wa.me/5511999999999?text=Olá! Tenho interesse no produto *${produto.nome}* que custa ${produto.preco}.`;
 
   const carousel = document.getElementById("carousel");
   carousel.innerHTML = "";
-
   imagensAtuais = produto.imagens;
   slideIndex = 0;
 
@@ -272,6 +283,8 @@ function abrirModal(produto) {
   atualizarSlide();
   document.getElementById("modal").style.display = "flex";
 }
+
+
 function moverSlide(direcao) {
   slideIndex += direcao;
   const total = imagensAtuais.length;

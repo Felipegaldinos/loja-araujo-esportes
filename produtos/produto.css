@@ -159,7 +159,18 @@ header {
     text-align: center;
     animation: slideUp 0.3s ease;
   }
-
+  #modal-preco {
+    font-size: 1.4em;
+    color: black;
+    margin: 10px 0;
+  }
+  #modal-tamanho {
+      margin-top: 10px;
+      font-size: 1em;
+      color: #444;
+    }
+    
+  
   @keyframes slideUp {
     from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
